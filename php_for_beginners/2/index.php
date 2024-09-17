@@ -1,3 +1,5 @@
 <?php
 
-require "index.view.php";
+$banner = "Home";
+
+require "views/index.view.php";
