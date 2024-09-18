@@ -1,5 +1,6 @@
 <?php
 
-$urlIs = function($value) {
-    return $_SERVER['REQUEST_URI'] == $value;
-};
+function urlIs($value): bool {
+    $url = parse_url(url: $value);
+    return $url['path'] == $value;
+}
