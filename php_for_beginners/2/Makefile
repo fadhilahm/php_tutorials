@@ -13,6 +13,9 @@ DB_PORT=3306
 help: ## Show this help message
 	@grep -E '^[a-zA-Z_-]+:.*?##' Makefile | awk 'BEGIN {FS = ":.*?## "}; {printf "  make %-12s : %s\n", $$1, $$2}'
 
+run: ## Run the PHP built-in server
+	@php -S localhost:8888
+
 compose_up: ## Start the MySQL service using Docker Compose.
 	@docker compose -f $(COMPOSE_FILE) -p ${PROJECT_NAME} up -d
 	@echo "MySQL service is up and running."

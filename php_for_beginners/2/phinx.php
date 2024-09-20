@@ -18,7 +18,6 @@ return
             'port' => '3306',
             'charset' => 'utf8',
         ],
-
     ],
     'version_order' => 'creation'
 ];
