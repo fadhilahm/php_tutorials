@@ -22,6 +22,8 @@ db_up: ## Create the database and tables, and then migrate and seed the database
 	@mysql -u $(DB_ROOT_USER) -p$(DB_ROOT_PASS) -h $(DB_HOST) -P $(DB_PORT) -e "CREATE DATABASE IF NOT EXISTS $(DB_NAME);" || echo "Database $(DB_NAME) already exists."
 	@echo "Running migrations..."
 	@vendor/bin/phinx migrate -e development
+	@echo "Seeding the database..."
+	@vendor/bin/phinx seed:run -e development
 
 db_down: ## Rollback all the migrations
 	@vendor/bin/phinx rollback -e development
