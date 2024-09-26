@@ -4,24 +4,10 @@ class Database
 {
     private $connection;
 
-    public function __construct()
+    public function __construct($config, $username = 'root', $password = 'rootpassword')
     {
-        $environments = [
-            'default_migration_table' => 'phinxlog',
-            'default_environment' => 'development',
-            'development' => [
-                'adapter' => 'mysql',
-                'host' => '127.0.0.1',
-                'name' => 'todo_db',
-                'user' => 'root',
-                'pass' => 'rootpassword',
-                'port' => '3306',
-                'charset' => 'utf8',
-            ],
-        ];
-        $env = $environments['development'];
-        $dsn = "{$env['adapter']}:host={$env['host']};dbname={$env['name']};port={$env['port']};charset={$env['charset']}";
-        $this->connection = new PDO(dsn: $dsn, username: $env['user'], password: $env['pass']);
+        $dsn = "{$config['adapter']}:host={$config['host']};dbname={$config['dbname']};port={$config['port']};charset={$config['charset']}";
+        $this->connection = new PDO(dsn: $dsn, username: $username, password: $password);
     }
 
     public function query($query)
