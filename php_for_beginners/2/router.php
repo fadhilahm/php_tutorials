@@ -14,8 +14,9 @@ $routeToController = function($uri, $routes, $db): void {
         require "views/{$code}.php";
     };    
 
-    if (array_key_exists(key: $uri, array: $routes)) {
-        require $routes[$uri];
+    $basePath = "/" . explode(separator: "/", string: $uri)[1];
+    if (array_key_exists(key: $basePath, array: $routes)) {
+        require $routes[$basePath];
     } else {
         $abort();
     }
