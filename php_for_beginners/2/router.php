@@ -6,7 +6,7 @@ $routes = [
     "/contact" => "controllers/contact.php"
 ];
 
-$routeToController = function($uri, $routes): void {
+$routeToController = function($uri, $routes, $db): void {
     $abort = function ($code = 404): void {
         http_response_code(response_code: $code);
         require "views/{$code}.php";
@@ -19,4 +19,4 @@ $routeToController = function($uri, $routes): void {
     }
 };
 
-$routeToController(uri: parse_url(url: $_SERVER['REQUEST_URI'])['path'], routes: $routes);
+$routeToController(uri: parse_url(url: $_SERVER['REQUEST_URI'])['path'], routes: $routes, db: $db);
