@@ -10,6 +10,7 @@
                         <a href="/" class="<?= urlIs(value: '/') ? 'bg-gray-900 text-white' : 'text-gray-300' ?> rounded-md px-3 py-2 text-sm font-medium">Home</a>
                         <a href="/about" class="<?= urlIs(value: '/about') ? 'bg-gray-900 text-white' : 'text-gray-300' ?> rounded-md px-3 py-2 text-sm font-medium">About</a>
                         <a href="/contact" class="<?= urlIs(value: '/contact') ? 'bg-gray-900 text-white' : 'text-gray-300' ?> rounded-md px-3 py-2 text-sm font-medium">Contact</a>
+                        <a href="/notes" class="<?= urlIs(value: '/contact') ? 'bg-gray-900 text-white' : 'text-gray-300' ?> rounded-md px-3 py-2 text-sm font-medium">Notes</a>
                     </div>
                 </div>
             </div>

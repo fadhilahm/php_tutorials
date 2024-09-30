@@ -2,7 +2,6 @@
 
 $banner = "Home";
 
-$posts = $db->query("SELECT * FROM posts");
-$notes = $db->query("SELECT * FROM notes");
+$posts = $db->query('SELECT * FROM posts');
 
 require "views/index.view.php";

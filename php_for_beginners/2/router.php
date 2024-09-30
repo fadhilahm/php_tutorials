@@ -3,7 +3,8 @@
 $routes = [
     "/" => "controllers/index.php",
     "/about" => "controllers/about.php",
-    "/contact" => "controllers/contact.php"
+    "/contact" => "controllers/contact.php",
+    "/notes" => "controllers/notes.php",
 ];
 
 $routeToController = function($uri, $routes, $db): void {
