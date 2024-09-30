@@ -15,3 +15,11 @@ Still using `phinx`, you could also create a seed file for `posts` table using t
 ```shell
 vendor/bin/phinx seed:create PostsSeeder
 ```
+
+## Development
+
+npm package called `browser-sync` is used to ease development by providing auto-reload functionality when working with `*.php` files. Be sure to install it beforehand by using the following command:
+
+```shell
+npm install -g browser-sync
+```

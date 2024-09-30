@@ -13,8 +13,16 @@ DB_PORT=3306
 help: ## Show this help message
 	@grep -E '^[a-zA-Z_-]+:.*?##' Makefile | awk 'BEGIN {FS = ":.*?## "}; {printf "  make %-12s : %s\n", $$1, $$2}'
 
-run: ## Run the PHP built-in server
+run_php: ## Run the PHP built-in server
 	@php -S localhost:8888
+
+run_browser_sync: ## Run BrowserSync
+	@browser-sync start --proxy "localhost:8888" --files "**/*.php, **/*.html, **/*.css, **/*.js"
+
+run: ## Run the PHP using live-reload functionality
+	@make run_php & \
+	sleep 2 && \
+	make run_browser_sync
 
 compose_up: ## Start the MySQL service using Docker Compose.
 	@docker compose -f $(COMPOSE_FILE) -p ${PROJECT_NAME} up -d
