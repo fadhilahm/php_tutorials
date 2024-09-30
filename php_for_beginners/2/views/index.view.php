@@ -4,7 +4,6 @@
 
 <main>
     <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8 flex-row flex flex-wrap gap-x-4 gap-y-6">
-
         <?php foreach ($notes as $note): ?>
             <?php require('components/postit.php')  ?>
         <?php endforeach; ?>
