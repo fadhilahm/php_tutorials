@@ -13,11 +13,14 @@ DB_PORT=3306
 help: ## Show this help message
 	@grep -E '^[a-zA-Z_-]+:.*?##' Makefile | awk 'BEGIN {FS = ":.*?## "}; {printf "  make %-12s : %s\n", $$1, $$2}'
 
+init: ## Install the project dependencies
+	@composer install
+
 run_php: ## Run the PHP built-in server
 	@php -S localhost:8888
 
 run_browser_sync: ## Run BrowserSync
-	@browser-sync start --proxy "localhost:8888" --files "**/*.php, **/*.html, **/*.css, **/*.js"
+	@browser-sync start --proxy "localhost:8888" --files "**/*.php, **/*.html, **/*.css, **/*.js" --no-open
 
 run: ## Run the PHP using live-reload functionality
 	@make run_php & \
