@@ -9,16 +9,11 @@ $routes = [
 ];
 
 $routeToController = function($uri, $routes, $db): void {
-    $abort = function ($code = 404): void {
-        http_response_code(response_code: $code);
-        require "views/{$code}.php";
-    };    
-
     $basePath = "/" . explode(separator: "/", string: $uri)[1];
     if (array_key_exists(key: $basePath, array: $routes)) {
         require $routes[$basePath];
     } else {
-        $abort();
+        abort();
     }
 };
 
