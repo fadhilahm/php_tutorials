@@ -7,9 +7,8 @@ $note = $db->query("SELECT notes.*, users.name FROM notes LEFT JOIN users ON not
     "id" => $id
 ])->findOrFail();
 
-if ($note["user_id"] != $currentUserId) {
-    abort(code: Response::FORBIDDEN);
-}
+authorize($currentUserId === $note['user_id']);
+
 
 $banner = "Note";
 require "views/note.view.php";
