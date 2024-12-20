@@ -1,4 +1,7 @@
 <?php
+ob_start();
+include 'views/components/create-new-note-button.php';
+$button = ob_get_clean();
 
 echo '
 <header class="bg-white shadow flex w-full items-center justify-between px-[22rem] py-6">
@@ -8,6 +11,6 @@ echo '
         </h1>
     </div>
     <div>
-    Placeholders for buttons
+' . $button . '
     </div>
 </header>';
