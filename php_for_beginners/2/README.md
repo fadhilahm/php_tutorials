@@ -32,3 +32,5 @@ npm package called `browser-sync` is used to ease development by providing auto-
 ```shell
 npm install -g browser-sync
 ```
+
+If you're using `browser-sync`, remember to use the port provided by that app instead of the one used by the underlying php app. `http://localhost:3000` is usually the URL that will be used.
