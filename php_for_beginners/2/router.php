@@ -3,7 +3,7 @@
 $routeToController = function($uri, $routes, $db): void {
     $path = explode(separator: "/", string: $uri);
     $basePath = "/" . $path[1];
-    $secondaryPath = "/" . $path[2];
+    $secondaryPath = isset($path[2]) ? "/" . $path[2] : "";
     if ($secondaryPath && array_key_exists(key: $basePath . $secondaryPath, array: $routes)) {
         require $routes[$basePath . $secondaryPath];
     } elseif (array_key_exists(key: $basePath, array: $routes)) {
