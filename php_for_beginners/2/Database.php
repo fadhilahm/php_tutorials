@@ -4,6 +4,7 @@ class Database
 {
     private $connection;
     private $statement;
+    private $lastInsertId;
 
     public function __construct($config, $username = 'root', $password = 'rootpassword')
     {
@@ -33,5 +34,19 @@ class Database
             abort(Response::NOT_FOUND);
         }
         return $item;
+    }
+
+    public function insert($table, $data) {
+        $columns = implode(',', array_keys($data));
+        $values = implode(',', array_fill(0, count($data), '?'));
+        $query = "INSERT INTO $table ($columns) VALUES ($values)";
+        $statement = $this->connection->prepare($query);
+        $statement->execute(array_values($data));
+        $this->lastInsertId = $this->connection->lastInsertId();
+        return $this;
+    }
+
+    public function lastInsertId() {
+        return $this->lastInsertId;
     }
 }

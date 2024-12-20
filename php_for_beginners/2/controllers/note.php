@@ -7,7 +7,8 @@ $note = $db->query("SELECT notes.*, users.name FROM notes LEFT JOIN users ON not
     "id" => $id
 ])->findOrFail();
 
-authorize($currentUserId === $note['user_id']);
+// uncomment the following line to authorize the current user
+// authorize($currentUserId === $note['user_id']);
 
 
 $banner = "Note";
