@@ -1,5 +1,14 @@
 # 2
 
+## Usual Sequence to Start DB
+
+```shell
+make init
+make compose_up
+make db_down
+make db_up
+```
+
 ## How to Create a New DB Migration
 
 This project used `phinx` in order to manage DB migrations. To create a migration that will create a new `Posts` table you could run the following command:
