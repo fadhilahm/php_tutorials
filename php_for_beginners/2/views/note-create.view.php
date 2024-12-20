@@ -11,10 +11,13 @@
                     type="text" 
                     name="title" 
                     id="title"
-                    required 
-                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-amber-300 focus:ring focus:ring-amber-200 focus:ring-opacity-50"
+                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-amber-300 focus:ring focus:ring-amber-200 focus:ring-opacity-50 <?= isset($errors['title']) ? 'border-red-500' : '' ?>"
                     placeholder="Enter your note title..."
+                    value="<?= $_POST['title'] ?? '' ?>"
                 >
+                <?php if (isset($errors['title'])) : ?>
+                    <p class="text-red-500 text-sm mt-1"><?= $errors['title'] ?></p>
+                <?php endif; ?>
             </div>
 
             <div class="space-y-2">
@@ -22,11 +25,13 @@
                 <textarea 
                     name="content" 
                     id="content"
-                    required 
                     rows="6"
-                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-amber-300 focus:ring focus:ring-amber-200 focus:ring-opacity-50"
+                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-amber-300 focus:ring focus:ring-amber-200 focus:ring-opacity-50 <?= isset($errors['content']) ? 'border-red-500' : '' ?>"
                     placeholder="Write your note content here..."
-                ></textarea>
+                ><?= $_POST['content'] ?? '' ?></textarea>
+                <?php if (isset($errors['content'])) : ?>
+                    <p class="text-red-500 text-sm mt-1"><?= $errors['content'] ?></p>
+                <?php endif; ?>
             </div>
 
             <div class="flex justify-end space-x-4">
