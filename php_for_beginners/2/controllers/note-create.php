@@ -1,25 +1,18 @@
 <?php
 $banner = "Create a New Note";
 
+require "Validator.php";
+
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $errors = [];
 
-    if (empty($_POST["title"])) {
-        $errors["title"] = "Title is required";
+    if (Validator::string($_POST["title"], 1, 100) === false) {
+        $errors["title"] = "Title must be between 1 and 100 characters";
     }
 
-    if (strlen($_POST["title"]) > 100) {
-        $errors["title"] = "Title must be less than 100 characters";
+    if (Validator::string($_POST["content"], 1, 1000) === false) {
+        $errors["content"] = "Content must be between 1 and 1000 characters";
     }
-
-    if (empty($_POST["content"])) {
-        $errors["content"] = "Content is required";
-    }
-
-    if (strlen($_POST["content"]) > 1000) {
-        $errors["content"] = "Content must be less than 1000 characters";
-    }
-
 
     if (count($errors) == 0) {
         $note = [
