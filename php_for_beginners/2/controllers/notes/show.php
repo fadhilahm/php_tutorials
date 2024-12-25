@@ -12,4 +12,4 @@ $note = $db->query("SELECT notes.*, users.name FROM notes LEFT JOIN users ON not
 
 
 $banner = "Note";
-require "views/note.view.php";
+require "views/show.view.php";

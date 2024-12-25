@@ -8,4 +8,4 @@ $notes = $db->query("
     LEFT JOIN users ON notes.user_id = users.id
 ")->get();
 
-require "views/notes.view.php";
+require "views/notes/index.view.php";
