@@ -1,4 +1,5 @@
 <?php
 
-$banner = 'About';
-require "views/about.view.php";
+view("about", [
+    "banner" => 'About',
+]);

@@ -13,5 +13,7 @@ $routeToController = function($uri, $routes, $db): void {
     }
 };
 
-$routes = require('./routes.php');
+$routes = require(base_path("routes.php"));
+$config = require "config.php";
+$db = new Database(config: $config['database']);
 $routeToController(uri: parse_url(url: $_SERVER['REQUEST_URI'])['path'], routes: $routes, db: $db);

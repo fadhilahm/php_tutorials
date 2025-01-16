@@ -1,6 +1,6 @@
 <?php
 ob_start();
-include 'views/components/create-new-note-button.php';
+include base_path('views/components/create-new-note-button.php');
 $button = ob_get_clean();
 
 echo '

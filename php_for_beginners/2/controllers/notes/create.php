@@ -1,11 +1,9 @@
 <?php
-$banner = "Create a New Note";
 
-require "Validator.php";
+require base_path("Validator.php");
+$errors = [];
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $errors = [];
-
     if (Validator::string($_POST["title"], 1, 100) === false) {
         $errors["title"] = "Title must be between 1 and 100 characters";
     }
@@ -29,4 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
 }
 
-require "views/notes/create.view.php";
+view("notes/create", [
+    "banner" => "Create a New Note",
+    "errors" => $errors
+]);

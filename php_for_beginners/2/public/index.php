@@ -1,11 +1,10 @@
 <?php
 
-require "functions.php";
-require "Response.php";
+const BASE_PATH = __DIR__ . "/../";
 
-require "Database.php";
+require BASE_PATH . "functions.php";
 
-$config = require "config.php";
-$db = new Database(config: $config['database']);
+require base_path("Response.php");
+require base_path("Database.php");
 
-require "router.php";
+require base_path("router.php");

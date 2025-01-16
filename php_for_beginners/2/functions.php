@@ -25,3 +25,12 @@ function authorize($condition, $response = Response::FORBIDDEN) {
     }
     return;
 }
+
+function base_path($path = ""): string {
+    return BASE_PATH . $path;
+}
+
+function view($path, $data = []): void {
+    extract($data);
+    require base_path("views/{$path}.view.php");
+}
