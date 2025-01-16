@@ -17,7 +17,7 @@ init: ## Install the project dependencies
 	@composer install
 
 run_php: ## Run the PHP built-in server
-	@php -S localhost:8888
+	@php -S localhost:8888 -t public
 
 run_browser_sync: ## Run BrowserSync
 	@browser-sync start --proxy "localhost:8888" --files "**/*.php, **/*.html, **/*.css, **/*.js" --no-open
