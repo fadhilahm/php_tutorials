@@ -1,5 +1,7 @@
 <?php
 
+use Core\Database;
+
 $routeToController = function($uri, $routes, $db): void {
     $path = explode(separator: "/", string: $uri);
     $basePath = "/" . $path[1];
