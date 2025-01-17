@@ -54,19 +54,18 @@ class Router {
 
     public function abort ($code = Response::NOT_FOUND) {
         http_response_code($code);
-        require "views/{$code}.php";
+        require base_path("views/{$code}.php");
         exit;
     }
 
     public function routeToController($uri, $attributes = []) {
         extract($attributes);
 
-        $path = explode(separator: "/", string: $uri);
-        $basePath = "/" . $path[1];
-        $secondaryPath = isset($path[2]) ? "/" . $path[2] : "";
+        $path = $uri;
+        $method = strtoupper($_SERVER['REQUEST_METHOD']);
 
         foreach ($this->routes as $route) {
-            if ($route['uri'] === $basePath && $route['method'] === $_SERVER['REQUEST_METHOD']) {
+            if ($route['uri'] === $path && $route['method'] === $method) {
                 return require $route['controller'];
             }
         }
