@@ -22,4 +22,5 @@ $router->get("/notes", base_path("controllers/notes/index.php"));
 $router->get("/notes/create", base_path("controllers/notes/create.php"));
 $router->post("/notes", base_path("controllers/notes/create.php"));
 $router->get("/notes/{id}", base_path("controllers/notes/show.php"));
+$router->delete("/notes/{id}", base_path("controllers/notes/destroy.php"));
 

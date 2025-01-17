@@ -68,7 +68,8 @@ class Router {
         extract($attributes);
 
         $path = $uri;
-        $method = strtoupper($_SERVER['REQUEST_METHOD']);
+        $method = $_POST['_method'] ?? $_SERVER['REQUEST_METHOD'];
+        $method = strtoupper($method);
 
         foreach ($this->routes as $route) {
             if ($this->matchRoute($path, $route['uri']) && $route['method'] === $method) {
