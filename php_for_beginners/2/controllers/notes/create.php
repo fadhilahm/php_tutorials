@@ -23,7 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         $db->insert("notes", $note);
         $newNoteId = $db->lastInsertId();
-        header("Location: /note/".$newNoteId.  "");
+        header("Location: /notes/".$newNoteId.  "");
         exit();
     }
 }

@@ -58,6 +58,12 @@ class Router {
         exit;
     }
 
+    private function matchRoute($uri, $route) {
+        $pattern = preg_replace('/\{([a-zA-Z]+)\}/', '([a-zA-Z0-9]+)', $route);
+        $pattern = "@^" . $pattern . "$@D";
+        return preg_match($pattern, $uri);
+    }
+
     public function routeToController($uri, $attributes = []) {
         extract($attributes);
 
@@ -65,7 +71,14 @@ class Router {
         $method = strtoupper($_SERVER['REQUEST_METHOD']);
 
         foreach ($this->routes as $route) {
-            if ($route['uri'] === $path && $route['method'] === $method) {
+            if ($this->matchRoute($path, $route['uri']) && $route['method'] === $method) {
+                $params = [];
+                if (strpos($route['uri'], '{') !== false) {
+                    preg_match('@^' . preg_replace('/\{([a-zA-Z]+)\}/', '([a-zA-Z0-9]+)', $route['uri']) . '$@D', $path, $matches);
+                    array_shift($matches);
+                    $params['id'] = $matches[0];
+                }
+                
                 return require $route['controller'];
             }
         }

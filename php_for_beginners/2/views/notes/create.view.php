@@ -4,7 +4,7 @@
 
 <main>
     <div class="mx-auto max-w-2xl px-4 py-6 sm:px-6 lg:px-8">
-        <form method="POST" class="bg-white shadow-md rounded-lg p-6 space-y-6">
+        <form method="POST" action="/notes" class="bg-white shadow-md rounded-lg p-6 space-y-6">
             <div class="space-y-2">
                 <label for="title" class="block text-sm font-medium text-gray-700">Title</label>
                 <input 
