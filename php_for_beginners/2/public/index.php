@@ -10,10 +10,17 @@ spl_autoload_register(function ($class) {
     require base_path("{$class}.php");
 });
 
+$container = new Core\Container();
+
+$container->bind('Core\Database', function () {
 $config = require base_path('config.php');
-$db = new Core\Database($config['database']);
+    return new Core\Database($config['database']);
+});
+Core\App::setContainer($container);
 
 $router = new Core\Router();
 require base_path("Core/routes.php");
 
+
+$db = Core\App::resolve(\Core\Database::class);
 $router->routeToController(parse_url($_SERVER['REQUEST_URI'])['path'], ['db' => $db]);
