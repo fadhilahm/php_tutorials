@@ -1,6 +1,7 @@
 <?php
 
 use Core\Router;
+use Core\Middleware\MiddlewareType;
 
 // Previous classless implementation
 // return [
@@ -12,26 +13,25 @@ use Core\Router;
 //     "/note" => "controllers/notes/show.php",
 // ];
 
-$router->get("/", base_path("controllers/index.php"));
+$router->get("/", "controllers/index.php");
 
-$router->get("/about", base_path("controllers/about.php"));
+$router->get("/about", "controllers/about.php");
 
-$router->get("/contact", base_path("controllers/contact.php"));
+$router->get("/contact", "controllers/contact.php");
 
 // Auth routes
-$router->get("/register", base_path("controllers/auth/register.php"));
-$router->post("/register", base_path("controllers/auth/register.php"));
-$router->get("/login", base_path("controllers/auth/login.php"));
-$router->post("/login", base_path("controllers/auth/login.php"));
-$router->post("/logout", base_path("controllers/auth/logout.php"));
+$router->get("/register", "controllers/auth/register.php", MiddlewareType::GUEST->value);
+$router->post("/register", "controllers/auth/register.php", MiddlewareType::GUEST->value);
+$router->get("/login", "controllers/auth/login.php", MiddlewareType::GUEST->value);
+$router->post("/login", "controllers/auth/login.php", MiddlewareType::GUEST->value);
+$router->post("/logout", "controllers/auth/logout.php", MiddlewareType::AUTH->value);
 
-// Notes routes
-$router->get("/notes", base_path("controllers/notes/index.php"));
-$router->post("/notes", base_path("controllers/notes/store.php"));
-$router->get("/notes/{id}", base_path("controllers/notes/show.php"));
-$router->delete("/notes/{id}", base_path("controllers/notes/destroy.php"));
-$router->get("/notes/create", base_path("controllers/notes/create.php"));
-
-$router->get("/notes/{id}/edit", base_path("controllers/notes/edit.php"));
-$router->patch("/notes/{id}", base_path("controllers/notes/update.php"));
+// Notes routes - all require authentication
+$router->get("/notes", "controllers/notes/index.php", MiddlewareType::AUTH->value);
+$router->get("/notes/create", "controllers/notes/create.php", MiddlewareType::AUTH->value);
+$router->post("/notes", "controllers/notes/store.php", MiddlewareType::AUTH->value);
+$router->get("/notes/{id}", "controllers/notes/show.php", MiddlewareType::AUTH->value);
+$router->get("/notes/{id}/edit", "controllers/notes/edit.php", MiddlewareType::AUTH->value);
+$router->patch("/notes/{id}", "controllers/notes/update.php", MiddlewareType::AUTH->value);
+$router->delete("/notes/{id}", "controllers/notes/destroy.php", MiddlewareType::AUTH->value);
 

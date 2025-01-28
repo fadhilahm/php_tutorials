@@ -2,11 +2,6 @@
 
 use Core\Session;
 
-if (!Session::isAuthenticated()) {
-    header('Location: /login');
-    exit();
-}
-
 $userId = Session::user()['id'];
 
 // require "views/notes/index.view.php";
