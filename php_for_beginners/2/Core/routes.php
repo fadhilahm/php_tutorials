@@ -18,6 +18,14 @@ $router->get("/about", base_path("controllers/about.php"));
 
 $router->get("/contact", base_path("controllers/contact.php"));
 
+// Auth routes
+$router->get("/register", base_path("controllers/auth/register.php"));
+$router->post("/register", base_path("controllers/auth/register.php"));
+$router->get("/login", base_path("controllers/auth/login.php"));
+$router->post("/login", base_path("controllers/auth/login.php"));
+$router->post("/logout", base_path("controllers/auth/logout.php"));
+
+// Notes routes
 $router->get("/notes", base_path("controllers/notes/index.php"));
 $router->post("/notes", base_path("controllers/notes/store.php"));
 $router->get("/notes/{id}", base_path("controllers/notes/show.php"));

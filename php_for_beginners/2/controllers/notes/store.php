@@ -1,6 +1,12 @@
 <?php
 
 use Core\Validator;
+use Core\Session;
+
+if (!Session::isAuthenticated()) {
+    header('Location: /login');
+    exit();
+}
 
 $errors = [];
 
@@ -22,11 +28,12 @@ if (count($errors) > 0) {
 $note = [
     "title" => $_POST["title"],
     "content" => $_POST["content"],
+    "user_id" => Session::user()['id'],
+    "created_at" => date('Y-m-d H:i:s'),
+    "updated_at" => date('Y-m-d H:i:s')
 ];
-
-$notes[] = $note;
 
 $db->insert("notes", $note);
 $newNoteId = $db->lastInsertId();
-header("Location: /notes/" . $newNoteId .  "");
+header("Location: /notes/" . $newNoteId);
 exit();
