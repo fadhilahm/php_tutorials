@@ -1,5 +1,9 @@
 <?php
 
+use Core\Session;
+
 view("auth/login", [
-    "banner" => "Login"
+    "banner" => "Login",
+    "errors" => Session::get('errors'),
+    "email" => Session::get('old')['email'] ?? ''
 ]); 

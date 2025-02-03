@@ -19,7 +19,7 @@ if (!$validator->validate($_POST)) {
 $auth = new Authenticator($db);
 
 if (!$auth->attempt($_POST['email'], $_POST['password'])) {
-    Session::flash('error', 'Invalid credentials');
+    Session::flash('errors', 'Invalid credentials');
     Session::flash('old', [
         'email' => $_POST['email']
     ]);
