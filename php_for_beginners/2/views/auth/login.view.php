@@ -26,10 +26,13 @@
                     type="email" 
                     name="email" 
                     id="email"
-                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-amber-300 focus:ring focus:ring-amber-200 focus:ring-opacity-50"
+                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-amber-300 focus:ring focus:ring-amber-200 focus:ring-opacity-50 <?= isset($errors['email']) ? 'border-red-500' : '' ?>"
                     placeholder="Enter your email..."
-                    value="<?= $_POST['email'] ?? '' ?>"
+                    value="<?= $email ?? '' ?>"
                 >
+                <?php if (isset($errors['email'])) : ?>
+                    <p class="mt-1 text-sm text-red-600"><?= $errors['email'][0] ?></p>
+                <?php endif; ?>
             </div>
 
             <div class="space-y-2">
@@ -38,9 +41,12 @@
                     type="password" 
                     name="password" 
                     id="password"
-                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-amber-300 focus:ring focus:ring-amber-200 focus:ring-opacity-50"
+                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-amber-300 focus:ring focus:ring-amber-200 focus:ring-opacity-50 <?= isset($errors['password']) ? 'border-red-500' : '' ?>"
                     placeholder="Enter your password..."
                 >
+                <?php if (isset($errors['password'])) : ?>
+                    <p class="mt-1 text-sm text-red-600"><?= $errors['password'][0] ?></p>
+                <?php endif; ?>
             </div>
 
             <div class="flex justify-end space-x-4">

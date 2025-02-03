@@ -4,16 +4,48 @@ namespace Core;
 
 class Validator
 {
+    protected $errors = [];
 
-    public static function string($value, $min = 1, $max = INF)
+    public function validate($data, $rules)
     {
-        $value = trim($value);
-        return strlen($value) >= $min && strlen($value) <= $max;
+        foreach ($rules as $field => $fieldRules) {
+            foreach ($fieldRules as $rule) {
+                $this->applyRule($field, $rule, $data[$field] ?? null);
+            }
+        }
+
+        return empty($this->errors);
     }
 
-    public static function email($value)
+    protected function applyRule($field, $rule, $value)
     {
-        $value = trim($value);
-        return filter_var($value, FILTER_VALIDATE_EMAIL);
+        if ($rule === 'required') {
+            if (empty($value)) {
+                $this->errors[$field][] = ucfirst($field) . " is required";
+            }
+        }
+
+        if ($rule === 'email') {
+            if (!filter_var($value, FILTER_VALIDATE_EMAIL)) {
+                $this->errors[$field][] = "Please provide a valid email address";
+            }
+        }
+
+        if (strpos($rule, 'min:') === 0) {
+            $min = (int) substr($rule, 4);
+            if (strlen($value) < $min) {
+                $this->errors[$field][] = ucfirst($field) . " must be at least {$min} characters";
+            }
+        }
+    }
+
+    public function errors()
+    {
+        return $this->errors;
+    }
+
+    public function error($field)
+    {
+        return $this->errors[$field][0] ?? '';
     }
 }
