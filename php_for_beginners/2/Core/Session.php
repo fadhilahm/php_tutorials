@@ -3,10 +3,16 @@
 namespace Core;
 
 class Session {
+    protected static $flash = [];
+
     public static function start() {
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
         }
+
+        // Load any existing flash data and clear it from the session
+        self::$flash = $_SESSION['_flash'] ?? [];
+        unset($_SESSION['_flash']);
     }
 
     public static function set($key, $value) {
@@ -14,31 +20,21 @@ class Session {
     }
 
     public static function get($key, $default = null) {
-        if (isset($_SESSION[$key])) {
-            return $_SESSION[$key];
-        }
-
-        if (isset($_SESSION['_flash'][$key])) {
-            $value = $_SESSION['_flash'][$key];
-            unset($_SESSION['_flash'][$key]);
-            return $value;
-        }
-
-        return $default;
+        return self::$flash[$key] ?? $_SESSION[$key] ?? $default;
     }
 
     public static function has($key) {
-        return isset($_SESSION[$key]) || isset($_SESSION['_flash'][$key]);
+        return isset(self::$flash[$key]) || isset($_SESSION[$key]);
     }
 
     public static function remove($key) {
         unset($_SESSION[$key]);
-        unset($_SESSION['_flash'][$key]);
     }
 
     public static function destroy() {
         session_destroy();
         $_SESSION = [];
+        self::$flash = [];
     }
 
     public static function isAuthenticated() {
@@ -50,29 +46,21 @@ class Session {
     }
 
     public static function flash($key, $value = null) {
-        if (!isset($_SESSION['_flash'])) {
-            $_SESSION['_flash'] = [];
-        }
-
         if ($value !== null) {
             $_SESSION['_flash'][$key] = $value;
             return $value;
         }
 
-        if (isset($_SESSION['_flash'][$key])) {
-            $value = $_SESSION['_flash'][$key];
-            unset($_SESSION['_flash'][$key]);
-            return $value;
-        }
-
-        return null;
+        $value = self::$flash[$key] ?? null;
+        unset(self::$flash[$key]);
+        return $value;
     }
 
     public static function hasFlash($key) {
-        return isset($_SESSION['_flash'][$key]);
+        return isset(self::$flash[$key]);
     }
 
     public static function clearFlash() {
-        $_SESSION['_flash'] = [];
+        self::$flash = [];
     }
 } 
