@@ -22,8 +22,8 @@ $router->get("/contact", "controllers/contact.php");
 // Auth routes
 $router->get("/register", "controllers/auth/register.php", MiddlewareType::GUEST->value);
 $router->post("/register", "controllers/auth/register.php", MiddlewareType::GUEST->value);
-$router->get("/login", "controllers/auth/login.php", MiddlewareType::GUEST->value);
-$router->post("/login", "controllers/auth/login.php", MiddlewareType::GUEST->value);
+$router->get("/login", "controllers/auth/login/create.php", MiddlewareType::GUEST->value);
+$router->post("/login", "controllers/auth/login/store.php", MiddlewareType::GUEST->value);
 $router->post("/logout", "controllers/auth/logout.php", MiddlewareType::AUTH->value);
 
 // Notes routes - all require authentication
