@@ -1,8 +1,10 @@
 <?php
 
-use Core\Session;
+use Core\Authenticator;
 
-Session::destroy();
+$auth = new Authenticator($db);
+$auth->logout();
+
 header("Location: /");
 exit();
 ?> 
