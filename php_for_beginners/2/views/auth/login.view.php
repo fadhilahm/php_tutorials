@@ -5,7 +5,7 @@
 <main>
     <div class="mx-auto max-w-md px-4 py-6 sm:px-6 lg:px-8">
         <form method="POST" action="/login" class="bg-white shadow-md rounded-lg p-6 space-y-6">
-            <?php if (isset($error)) : ?>
+            <?php if (isset($errors)) : ?>
                 <div class="bg-red-50 border-l-4 border-red-400 p-4">
                     <div class="flex">
                         <div class="flex-shrink-0">
@@ -14,7 +14,7 @@
                             </svg>
                         </div>
                         <div class="ml-3">
-                            <p class="text-sm text-red-700"><?= $error ?></p>
+                            <p class="text-sm text-red-700"><?= $errors ?></p>
                         </div>
                     </div>
                 </div>
