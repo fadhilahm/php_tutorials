@@ -25,3 +25,5 @@ require base_path("Core/routes.php");
 
 $db = Core\App::resolve(\Core\Database::class);
 $router->routeToController(parse_url($_SERVER['REQUEST_URI'])['path'], ['db' => $db]);
+
+Session::clearFlash();
