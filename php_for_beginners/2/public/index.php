@@ -10,20 +10,48 @@ spl_autoload_register(function ($class) {
 });
 
 use Core\Session;
-Session::start();
+use Core\Response;
+use Core\ValidationException;
 
-$container = new Core\Container();
+try {
+    Session::start();
 
-$container->bind('Core\Database', function () {
-    $config = require base_path('config.php');
-    return new Core\Database($config['database']);
-});
-Core\App::setContainer($container);
+    $container = new Core\Container();
 
-$router = new Core\Router();
-require base_path("Core/routes.php");
+    $container->bind('Core\Database', function () {
+        $config = require base_path('config.php');
+        return new Core\Database($config['database']);
+    });
+    Core\App::setContainer($container);
 
-$db = Core\App::resolve(\Core\Database::class);
-$router->routeToController(parse_url($_SERVER['REQUEST_URI'])['path'], ['db' => $db]);
+    $router = new Core\Router();
+    require base_path("Core/routes.php");
 
-Session::clearFlash();
+    $db = Core\App::resolve(\Core\Database::class);
+    $uri = parse_url($_SERVER['REQUEST_URI'])['path'];
+    $router->routeToController($uri, ['db' => $db]);
+
+} catch (ValidationException $e) {
+    Session::flash('errors', $e->errors);
+    Session::flash('old', $e->old);
+    
+    return redirect($_SERVER['HTTP_REFERER']);
+} catch (\PDOException $e) {
+    // Database connection errors
+    error_log($e->getMessage());
+    http_response_code(500);
+    view("500", [
+        'heading' => 'Database Error',
+        'message' => 'Sorry, there was an error connecting to the database.'
+    ]);
+} catch (\Exception $e) {
+    // General errors
+    error_log($e->getMessage());
+    http_response_code(500);
+    view("500", [
+        'heading' => 'Server Error',
+        'message' => 'Sorry, something went wrong on our end.'
+    ]);
+} finally {
+    Session::clearFlash();
+}

@@ -59,44 +59,50 @@ class Router {
     }
 
     public function route($uri, $method) {
+        // First check if the route exists for any method
+        $routeExists = false;
+        $allowedMethods = [];
+        
         foreach ($this->routes as $route) {
-            if ($route['uri'] === $uri && $route['method'] === strtoupper($method)) {
-                MiddlewareResolver::resolve($route['middleware']);
+            if ($this->matchRoute($uri, $route['uri'])) {
+                $routeExists = true;
+                $allowedMethods[] = $route['method'];
                 
-                return require base_path($route['controller']);
+                if ($route['method'] === strtoupper($method)) {
+                    try {
+                        MiddlewareResolver::resolve($route['middleware']);
+                        return require base_path($route['controller']);
+                    } catch (\Exception $e) {
+                        Session::flash('error', $e->getMessage());
+                        return $this->redirect('/');
+                    }
+                }
             }
         }
+        
+        if ($routeExists) {
+            // Route exists but method not allowed
+            $this->abort(Response::METHOD_NOT_ALLOWED);
+        }
 
-        $this->abort();
+        // Route doesn't exist at all
+        $this->abort(Response::NOT_FOUND);
     }
 
-    protected function abort($code = 404) {
+    protected function abort($code = Response::NOT_FOUND) {
         http_response_code($code);
         require base_path("views/{$code}.php");
         die();
     }
 
+    protected function redirect($path) {
+        header("Location: {$path}");
+        exit();
+    }
+
     public function routeToController($uri, $attributes = []) {
         $method = $_POST['_method'] ?? $_SERVER['REQUEST_METHOD'];
-        $method = strtoupper($method);
-
-        foreach ($this->routes as $route) {
-            if ($this->matchRoute($uri, $route['uri']) && $route['method'] === $method) {
-                // Extract route parameters
-                if (strpos($route['uri'], '{') !== false) {
-                    preg_match('@^' . preg_replace('/\{([a-zA-Z]+)\}/', '([a-zA-Z0-9]+)', $route['uri']) . '$@D', $uri, $matches);
-                    array_shift($matches);
-                    $attributes['params'] = ['id' => $matches[0]];
-                }
-
-                MiddlewareResolver::resolve($route['middleware']);
-                extract($attributes);
-                
-                return require base_path($route['controller']);
-            }
-        }
-
-        $this->abort();
+        return $this->route($uri, $method);
     }
 
     private function matchRoute($uri, $route) {

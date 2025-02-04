@@ -36,3 +36,8 @@ function view($path, $data = []): void {
     extract($data);
     require base_path("views/{$path}.view.php");
 }
+
+function redirect($path) {
+    header("Location: {$path}");
+    exit();
+}
